@@ -32,8 +32,12 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'authentication',
+    'corsheaders',
     'datatransfer',
+    'project',
+    'mailservice',
     'channels',
+    'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -50,7 +54,16 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
+
+CORS_ORIGIN_ALLOW_ALL = True
+
+rest_framework = {
+    'DEFAULT_PERMISSIONS_CLASSES': ('rest_framework.permissions.AllowAny',),
+    'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework_simplejwt.authentication.JWTAuthentication',)
+}
 
 ROOT_URLCONF = 'backend.urls'
 
@@ -71,8 +84,16 @@ TEMPLATES = [
 ]
 
 
-ASGI_APPLICATION = 'backend.routing.application'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.office365.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = '322685@student.fontys.nl'
+EMAIL_HOST_PASSWORD = 'equentiz99'
 
+
+WSGI_APPLICATION = 'backend.wsgi.application'
+ASGI_APPLICATION = 'backend.routing.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
@@ -80,10 +101,10 @@ ASGI_APPLICATION = 'backend.routing.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME':'testdatabase',
-        'USER':'postgres',
-        'PASSWORD':'postadmin',
-        'HOST':'127.0.0.1',
+        'NAME': 'testdatabase',
+        'USER': 'postgres',
+        'PASSWORD': 'postadmin',
+        'HOST': '127.0.0.1',
         'PORT': '5432'
     }
 }
