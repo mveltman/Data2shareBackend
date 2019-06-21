@@ -2,7 +2,8 @@ import asyncio
 import json
 from .models import File, Project
 
-
+# The goal of this class is to notify any consumers that have subscribed to updates for a certain project
+# this is used to keep users updated on what other users of the same project are doing.
 class ProjectManager():
 
     def __init__(self):
